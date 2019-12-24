@@ -1,17 +1,20 @@
 package com.example.admin.databinding
 
+import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.admin.databinding.databinding.ItemListBinding
 
-class RecyclerviewAdapter( val user : List<User>) : RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder>()
+class RecyclerviewAdapter( val user : List<User> ) : RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder>()
 {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
 
-        return (ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.item_list,parent,false)))
+       val binding : ItemListBinding = DataBindingUtil.inflate(LayoutInflater.from(parent?.context), R.layout.item_list,parent,false)
+       return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
@@ -24,14 +27,11 @@ class RecyclerviewAdapter( val user : List<User>) : RecyclerView.Adapter<Recycle
         return user.size
     }
 
-    class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
-
-        var userName = view.findViewById<TextView>(R.id.getUserName)
-        var weight = view.findViewById<TextView>(R.id.getUserWeight)
+    class ViewHolder(val binding : ItemListBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bindTo(userList : User){
-            userName.text = userList.userName
-            weight.text = userList.weight
+            binding.userModel = userList
+
         }
     }
 }
